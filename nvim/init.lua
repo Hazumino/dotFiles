@@ -1,216 +1,51 @@
-local ensure_packer = function()
-  local fn = vim.fn
-  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-  if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-    vim.cmd [[packadd packer.nvim]]
-    return true
-  end
-  return false
-end
+-- bootstrap lazy.nvim, LazyVim and your plugins
+require("config.lazy")
 
-local packer_bootstrap = ensure_packer()
-
-require('packer').startup(function(use)
-  -- Packet Manager
-  use 'wbthomason/packer.nvim'
-
-  --StatusLine
-  use({
-  "NTBBloodbath/galaxyline.nvim",
-  -- your statusline
-  config = function()
-    require("galaxyline.themes.eviline")
-  end,
-  -- some optional icons
-  requires = { "kyazdani42/nvim-web-devicons", opt = true }
+require("notify").setup({
+  background_colour = "#000000",
 })
-  --Terminal Integration
-  use "numToStr/FTerm.nvim"
-
-  --Code Completion
-  use {
-	  'ms-jpq/coq_nvim', branch= 'coq'
-  }
-  use {
-	  'ms-jpq/coq.artifacts', branch = 'artifacts'
-  }
-  use { 'CRAG666/code_runner.nvim', requires = 'nvim-lua/plenary.nvim' }
-
-  --MainPage
-  use 'glepnir/dashboard-nvim'
-
-  --Bar Vim
-  use 'nvim-tree/nvim-web-devicons'
-  use {'romgrk/barbar.nvim'}
-
-  -- Color Theme
-  use 'sts10/vim-pink-moon'
-  use 'gbprod/nord.nvim'
-  use 'folke/tokyonight.nvim'
-
-  -- Fuzzy Finder
-  use 'junegunn/fzf.vim'
-
-  --Sniprun
-    use { 'michaelb/sniprun', run = 'bash ./install.sh'}
-
-  --Todo
-  use {
-  "folke/todo-comments.nvim",
-  requires = "nvim-lua/plenary.nvim",
-  config = function()
-    require("todo-comments").setup {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    }
-  end
-}
-
-  -- Latex
-  use 'lervag/vimtex'
-
-  -- File Explorer
-  use {
-  'nvim-tree/nvim-tree.lua',
-  requires = {
-    'nvim-tree/nvim-web-devicons', -- optional, for file icons
+require("transparent").setup({
+  groups = { -- table: default groups
+    "Normal",
+    "Lazy",
+    "NormalNC",
+    "Comment",
+    "Constant",
+    "Special",
+    "Identifier",
+    "Statement",
+    "PreProc",
+    "Type",
+    "Underlined",
+    "Todo",
+    "String",
+    "Function",
+    "Conditional",
+    "Repeat",
+    "Notify",
+    "Operator",
+    "Structure",
+    "LineNr",
+    "NonText",
+    "SignColumn",
+    "CursorLineNr",
+    "CursorLine",
+    "EndOfBuffer",
+    "rt",
   },
-  tag = 'nightly' -- optional, updated every week. (see issue #1193)
-  }
-
-  use 'NvChad/nvim-colorizer.lua'
-
-  use 'karb94/neoscroll.nvim'
-  if packer_bootstrap then
-    require('packer').sync()
-    end
-  
-    end
-)
-    
-
--- disable netrw at the very start of your init.lua (strongly advised)
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
--- set termguicolors to enable highlight groups
-vim.opt.termguicolors = true
-
--- empty setup using defaults
-require("nvim-tree").setup()
-
--- Scroller
-require('neoscroll').setup()
-
-vim.cmd.colorscheme('tokyonight')
-
---Dashboard
-local db = require('dashboard')
-db.hide_statusline = false
-db.hide_tabline = false
-db.custom_header = {
-'⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣤⣤⣦⣴⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⣤⣤⣤⣄⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-'⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣜⠾⠋⠉⠉⠉⠙⠻⣿⣿⣧⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣟⠿⠋⠉⠉⠋⠛⢻⣷⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-'⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀⠀⠀⠀⢠⡞⡟⠀⠀⠀⠀⠀⠀⠀⠀⠈⢿⣿⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠈⠹⣿⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-'⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢿⣷⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-'⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠀⠁⠀⠀⠀⠂⠀⠀⠀⠀⠀⠀⠀⣾⣿⠀   NVIM⠀⠀⠀⢸⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀⠀⠀ NVIM ⠀⠀⠀⠘⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-'⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠄⠀⠀⠠⠐⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣿⣿⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-'⠀⠀⠀⠀⠀⠀⠀⠀⡀⠠⠀⠀⠀⠂⠀⡀⠠⠀⠁⠀⠀⠀⠀⠀⠀⠀⢻⣿⣄⠀⠀⠀⢠⣤⣄⠀⠀⣠⣾⣿⣿⠟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⣧⠀⠀⠀⠀⢠⣤⠀⠀⠀⠀⠀⠀⣾⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠂⠀⠠⠀⠀⠀⡀⠀⠀⠀⠀⠀',
-'⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠀⡀⠀⠀⡀⠰⠀⠀⠀⠀⠀⠀⠀⠈⣿⣿⣇⠀⠀⠸⣿⣿⡆⣰⣿⣿⡿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⡀⢀⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⣿⣷⡀⠀⠀⣸⣿⠀⠀⠀⠀⢀⣾⣿⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠰⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-'⠀⠀⠀⠀⠀⠀⡀⠠⠀⢀⠈⠀⠠⠀⠀⠄⠁⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⣿⣿⣶⣴⣿⣿⣿⣿⠿⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⠌⡰⢈⠐⡠⠈⠆⡐⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢿⣿⣷⣠⣿⡟⢀⣄⣰⣾⡿⡿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠄⠀⠂⠀⢀⠀⠀⠀⠀⠀⠀⠀',
-'⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⠀⠐⠀⡀⠁⠠⠐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠠⠀⠂⠀⠀⡘⠰⡀⠌⠒⡀⠍⡐⠀⠀⠀⠀⠁⠀⠂⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠻⠿⠿⠿⠿⠛⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠀⠀⠂⠀⠀⠀⠀⠀⠀⠀⠀',
-'⠀⠀⠀⠀⠀⠐⠀⠈⠀⠀⠈⢀⠀⠄⠐⠀⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠄⠐⠀⠀⢀⠀⠀⠄⡡⢑⠠⣉⠰⢁⠂⠀⠀⠀⡀⠈⠀⠠⠐⠀⠀⢀⠠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠄⠀⠁⠀⠀⠂⠈⠀⠀⠀⠀⠀',
-'⠀⠀⠀⠀⠐⠀⠀⠐⠀⠈⢀⠀⠠⠀⠂⢈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠄⠂⠀⡀⠄⠀⠂⠀⠀⡘⠤⣈⠒⢠⠘⠠⠀⠀⠀⠄⠀⠐⠀⡀⠄⠀⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠠⠐⠈⠀⠐⠀⢀⠀⠠⠀⠀⠀',
-'⠀⠀⠀⠀⠠⠐⠈⠀⡀⠁⡀⢀⠂⢀⠡⠀⡈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡐⠀⠀⡀⠠⠀⠀⡀⠐⠀⠀⠠⠑⡰⢀⠎⠤⠁⠄⠀⠐⠈⠀⠐⠀⠄⠀⡀⠐⠀⠈⢀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⠄⠀⠂⢀⠈⠀⠀⠀⠀⠀⠀',
-'⠀⠀⠀⠐⠀⢀⠠⠀⠀⠄⢀⠠⠀⠂⢀⠐⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠂⠁⠀⠠⠐⠀⠀⠄⠁⠀⡀⠂⠀⢢⠉⠔⠡⠈⠂⠍⠠⠀⢀⠂⠈⠀⠄⠂⠀⠄⢀⠈⠀⡀⠠⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⡐⠀⡈⢀⠀⠠⠐⠈⠀⠀⠀⠀',
-'⠀⠀⠀⠄⠂⠀⢀⠠⠈⠀⡀⠠⠐⠀⠂⢀⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⠀⠠⠁⠀⠄⠂⠁⠀⠂⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠌⠀⠀⠂⠁⠠⠀⠀⠐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⡀⠐⠀⡀⠠⠀⠀⠄⠐⠈⠀⠀',
-'⠀⠀⠀⢀⠠⠐⠀⢀⠀⠂⠀⠄⠐⠈⢀⠂⢀⠡⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠀⠀⠀⠈⠀⠐⠈⠀⠀⠀⣀⣀⢤⡐⣆⠶⣱⢒⡖⣲⢒⣦⢲⡔⣦⢤⣀⣀⡀⠀⠀⠁⠀⠀⠀⠀⢀⡀⡄⠂⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠀⠀⠄⠁⠀⠄⠀⠁⠀⡀⠀⠀⠀',
-'⠀⠀⠀⡀⠀⠀⠄⠂⠀⠠⠁⠀⠂⠈⢀⠀⠂⠀⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠣⢖⡠⣄⠤⣆⢖⡺⡜⣭⠳⡜⢦⡹⣬⠳⣥⢫⢼⣡⢏⢶⢣⠞⢦⠧⣙⠦⣝⢫⢖⡲⢤⠮⠭⠽⠌⠓⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠁⢀⠁⠠⠈⠀⡀⠈⠀⠄⠀⠀⠐⠀',
-'⠀⠀⠀⠀⠀⠂⠀⡀⠂⠁⠀⠂⠁⠈⠀⠠⠈⢀⠐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠈⠈⠁⠁⠈⠁⠉⠀⠁⠈⠁⠈⠁⠈⠀⠉⠀⠉⠈⠉⠈⠁⠉⠈⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢁⠀⠂⠀⠄⠐⠀⢀⠀⠁⠀⠀⠂⠀⠀',
-'⠀⠀⠀⠀⠁⠀⠄⠀⠠⠀⠁⠠⠈⠀⢁⠠⠐⠀⠠⠈⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠈⠀⠠⠐⠀⡀⠂⠈⠀⠀⡀⠈⠀⠀⠀⠀',
-'⠀⠀⠀⠀⠀⠂⠀⠐⠀⢀⠈⠀⡀⠌⠀⢀⠀⠂⠁⢀⠂⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠂⢀⠈⠀⠄⠂⠀⢀⠐⠀⠁⠀⠀⠀⠐⠀⠀',
-'⠀⠀⠀⠀⠁⠀⠀⠄⠀⠀⡀⠀⢀⠀⠄⠀⠠⠐⠈⠀⠠⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠂⠀⡀⠀⠀⠂⢀⠀⠈⠀⠀⠀⡀⠄⠀⠀⠀⠀⠀',
-'⠀⠀⠀⠀⠀⠀⠂⠀⠀⠄⠀⠠⠀⠀⠀⠂⠀⠠⠐⠈⠀⡀⠄⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠀⠀⠐⠀⠀⢀⠀⠄⠀⠀⠂⠁⠀⢀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⠀⠁⠀⠀⠁⢀⠀⠀⠠⠐⠀⠁⠀⠀⠀⠀⠀  ',
-'⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠐⠀⠀⠠⠀⠀⠀⠐⠀⠄⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠠⠀⠂⠁⠀⠀⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-'⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⠀⠄⠀⠀⠐⠀⠀⠀⠁⠀⠂⠀⠄⠀⠀⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⢀⠀⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠂⠀⠀⠀⠀⡀⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠀⠁⠀⠂⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀'
-}
-db.custom_center = {
-	{
-		icon = 'ﮮ   ',
-		desc = 'Update plugins                             ',
-		action="PackerSync"
-	},
-	{
-		icon = '   ',
-		desc = 'Open Previews File                         ',
-		action="browse oldfiles"
-	},
-	{
-		icon = '   ',
-		desc = 'Find File                          ',
-		shortcut = ' Space f',
-		action="Files"
-	},
-	{
-		icon = '   ',
-		desc = 'Browser Files                       ',
-		shortcut = 'Space t',
-		action="NvimTreeToggle"
-	},
-	{
-		icon = '   ',
-		desc = 'Open ToDo List                             ',
-		action="e /home/zenodea/Documents/General/todo.lua"
-	},
-	{
-		icon = '   ',
-		desc = 'Open Terminal                     ',
-		shortcut = '  Space o',
-		action="FTermOpen"
-	},
-	{
-		icon = '   ',
-		desc = 'Exit                                      ',
-		shortcut = 'q',
-		action="q"
-	},
-}
-
--- Fterm Open
-vim.api.nvim_create_user_command('FTermOpen', require('FTerm').open, { bang = true })
-
--- Fterm Closee
-vim.api.nvim_create_user_command('FTermClose', require('FTerm').close, { bang = true })
-
--- Code Runner Setup
-require('code_runner').setup({
-  -- put here the commands by filetype
-  filetype = {
-		java = "cd $dir && javac $fileName && java $fileNameWithoutExt",
-		python = "python3 -u",
-		typescript = "deno run",
-		rust = "cd $dir && rustc $fileName && $dir/$fileNameWithoutExt"
-	},
+  extra_groups = {}, -- table: additional groups that should be cleared
+  exclude_groups = {}, -- table: groups you don't want to clear
 })
 
---BarBar Setting
-local map = vim.api.nvim_set_keymap
-local opts = { noremap = true, silent = false }
+local rt = require("rust-tools")
 
--- Move to previous/next
-map('n', '<c-,>', '<Cmd>BufferPrevious<CR>', opts)
-map('n', '<c-.>', '<Cmd>BufferNext<CR>', opts)
-
--- General Shortcuts
-
--- Toggle fzf
-map('n', '<Space>f', '<Cmd>Files<CR>', opts)
-
--- Toggle Tree
-map('n', '<Space>t', '<Cmd>NvimTreeToggle<CR>', opts)
-
--- Toggle Terminal
-map('n', '<Space>o', '<Cmd>FTermOpen<CR>', opts)
-map('n', '<Space>p', '<Cmd>FTermClose<CR>', opts)
+rt.setup({
+  server = {
+    on_attach = function(_, bufnr)
+      -- Hover actions
+      vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+      -- Code action groups
+      vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+    end,
+  },
+})
