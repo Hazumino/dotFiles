@@ -23,5 +23,14 @@ return {
   },
   { "neovim/nvim-lspconfig" },
 
+  { "romainl/Apprentice" },
+
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "apprentice",
+    },
+  },
+
   { "simrat39/rust-tools.nvim" },
 }
