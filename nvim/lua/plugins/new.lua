@@ -24,11 +24,12 @@ return {
   { "neovim/nvim-lspconfig" },
 
   { "romainl/Apprentice" },
+  { "Mofiqul/dracula.nvim" },
 
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "apprentice",
+      colorscheme = "dracula",
     },
   },
 
