@@ -22,6 +22,7 @@ set $menu dmenu_path | dmenu | xargs swaymsg exec --
 #                       
 # Volume control        
 #                       
+exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
     bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%    
     bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%    
     bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle    
@@ -34,7 +35,7 @@ set $menu dmenu_path | dmenu | xargs swaymsg exec --
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in @datadir@/backgrounds/sway/)
-output "*" bg $HOME/Downloads/wallpaper.jpg center #808fa4 
+output "*" bg $HOME/Downloads/wallpaper.jpg center #808fa4
 
 for_window [app_id="foot"] opacity 0.8
 
@@ -76,11 +77,15 @@ client.focused "#C1ADAE" "#C1ADAE" "#C1ADAE" "#C1ADAE"
 
 
 ### Key bindings
-#
+# Make Caps Lock CMD Key
+input type:keyboard {
+xkb_options ctrl:nocaps
+    xkb_layout us
+}
 # Basics:
 #
     # Open file explorer
-    bindsym $mod+q exec fuzzel 
+    bindsym $mod+q exec  fuzzel   
 
     # File Manager
     bindsym $mod+p exec $term vifm
@@ -94,9 +99,7 @@ client.focused "#C1ADAE" "#C1ADAE" "#C1ADAE" "#C1ADAE"
     # Kill focused window
     bindsym $mod+Shift+q kill
 
-    # Start your launcher
-    bindsym $mod+d exec $menu
-
+    # Start your launcher bindsym $mod+d exec $menu
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
     # Despite the name, also works for non-floating windows.
@@ -222,11 +225,11 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-output eDP-1 scale 1.2
+output Unknown-1 scale 0.1
 
 gaps inner 10
 
-default_border pixel 1
+default_border pixel 3
 
 #
 # Status Bar:
