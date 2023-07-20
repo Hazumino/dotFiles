@@ -1,6 +1,7 @@
 # Hazumino Dot Files
 
 ### Packages:
+- [hyprland](https://github.com/hyprwm/Hyprland)
 - [fuzzel](https://codeberg.org/dnkl/fuzzel) 
 - [rofi](https://github.com/davatorium/rofi)
 - [grim](https://github.com/emersion/grim) & [slurp](https://github.com/emersion/slurp)
@@ -35,6 +36,12 @@
 
 ### Screenshot
 ![Example](example.png)
+
+
+![ExampleBrowser](example_browser.png)
+
+
+![ExampleWallpaper](change_wall.png)
 
 
 ### Note
