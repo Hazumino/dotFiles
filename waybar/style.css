@@ -2,49 +2,44 @@
   transition: none;
   box-shadow: none;
   font-weight: bold;
-  font-size: 11px;
-  color: #BD93F9;
+  font-size: 13px;
 }
 
 #waybar {
-  margin-top: 14px;
   background: rgba(40,42,54,0.7);
   border-radius: 12px;
   border: 2px solid #BD93F9;
 }
 
 #workspaces {
-  margin: 0 10px;
-  color: transparent;
+  padding-right:30px;
 }
 
 #workspaces button {
-  margin: 3px 0;
-  padding: 0 4px;
+  padding: 0px;
+  color: #BD93F9;
 }
 
-#workspaces button.visible {
+#workspaces button.active {
+  color: #DEC9FC;
 }
 
 #workspaces button.focused {
-  border-radius: 10px;
-  background-color: rgba(0,0,0,0.4);
 }
 
 #workspaces button.urgent {
-  border-radius: 10px;
 }
 
-#workspaces button.urgent * {
+#workspaces button.urgent {
   color: rgba(246,71,71,0.8);
 }
 
-#mode, #battery, #cpu, #disk, #memory, #network, #pulseaudio, #idle_inhibitor, #backlight,  #clock, #temperature {
+#mode, #custom-kb, #custom-forward,#custom-backward, #custom-github, #custom-youtube,  #custom-reddit, #custom-power, #workspaces, #battery, #cpu, #disk, #memory, #network, #pulseaudio, #idle_inhibitor, #backlight,  #clock, #temperature {
   margin: 4px 4px;
-  padding: 0px 9px;
   border-radius: 20px;
   min-width: 10px;
   background-color: transparent;
+  color: #BD93F9;
 }
 
 #clock {

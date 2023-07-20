@@ -1,25 +1,67 @@
 {
     "layer": "bottom",
     "position": "bottom",
-    "height": 20,
-    "width": 800,
-    "margin": "3, 0, 2, 0",
-    "modules-left": [ "sway/workspaces", "cpu", "memory", "disk"],
-    "modules-right": ["tray",  "idle_inhibitor", "pulseaudio", "network", "battery", "clock"],
+    "height": 10,
+    "width": 1050,
+    "margin": "9, 0, 2, 0",
+    "modules-center": ["custom/backward", "custom/forward"],
+    "modules-left": [ "wlr/workspaces", "cpu", "memory", "disk"],
+    "modules-right": ["custom/kb","backlight", "network", "battery", "clock", "custom/power"],
 
-    "sway/workspaces": {
+    "wlr/workspaces": {
         "format": "{icon}",
-        "format-icons": {
-        }
+        "format-icons":{ 
+        "1": "",
+        "2": "󰈹",
+        "3": "",
+        "4": "󰝚",
+        "5": "󰙯",
+        "urgent": "",
+        "focused": "",
+        "default": ""},
+        "on-click": "activate",
     },
 
-    "custom/launcher": {
-        "format":"⋏",
-        "on-click": "exec wofi -c ~/.config/wofi/config -I",
+    "custom/kb": {
+        "device": "kbd_backlight",
+        "format": "󰌌   {}%",
+        "interval": 1,
+        "exec": "echo $((($(brightnessctl --device='kbd_backlight' get)*100) / 255))",
+        "format-icons": ["󰌌"],
+        "on-scroll-down": "brightnessctl --device='kbd_backlight' set 1%-",
+        "on-scroll-up": "brightnessctl --device='kbd_backlight' set 1%+"
+    },
+
+    "custom/youtube": {
+        "format":" 󰗃 ",
+        "on-click": "exec firefox youtube.com",
         "tooltip": false,
     },
 
-    "sway/window": {
+    "custom/forward": {
+        "format":"  ",
+        "on-click": "exec ~/dotFiles/swww.sh forward",
+        "tooltip": false,
+    },
+
+    "custom/backward": {
+        "format":"  ",
+        "on-click": "exec ~/dotFiles/swww.sh backward",
+        "tooltip": false,
+    },
+    "custom/reddit": {
+        "format":"  ",
+        "on-click": "exec firefox reddit.com",
+        "tooltip": false,
+    },
+
+    "custom/github": {
+        "format":"  ",
+        "on-click": "exec firefox github.com",
+        "tooltip": false,
+    },
+
+    "wlr/window": {
         "max-length": 25,
         "tooltip": false
     },
@@ -28,7 +70,7 @@
         "interval": 1,
         "locale": "C", 
         "format": "{:%I:%M %p}",
-        "format-alt": " {:%a,%b %d}" // Icon: calendar-alt
+        "format-alt": "  {:%a,%b %d}" // Icon: calendar-alt
     },
 
     "cpu": {
@@ -65,8 +107,8 @@
 
     "temperature": {
         "critical-threshold": 80,
-	"format-critical": "{temperatureC}° ",
-	"format": "{temperatureC}° "
+        "format-critical": "{temperatureC}° ",
+        "format": "{temperatureC}° "
     },
 
     "network": {
@@ -103,11 +145,12 @@
 
     "backlight": {
         "device": "intel_backlight",
-        "format": "{icon} {percent}%",
-        "format-icons": ["☀️", ""],
+        "format": "{icon}   {percent}%",
+        "format-icons": [""],
         "on-scroll-down": "brightnessctl -c backlight set 1%-",
         "on-scroll-up": "brightnessctl -c backlight set +1%"
     },
+
 
     "idle_inhibitor": {
         "format": "{icon}",
@@ -171,8 +214,8 @@
     },
 
     "custom/power": {
-        "format":"⏻",
-        "on-click": "exec ~/.config/waybar/scripts/power-menu.sh",
+        "format":"  ⏻  ",
+        "on-click": "exec ~/.config/rofi/powermenu/type-2/powermenu.sh",
         "tooltip": false,
     },
 }
