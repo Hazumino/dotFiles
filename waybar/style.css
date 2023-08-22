@@ -34,7 +34,7 @@
   color: rgba(246,71,71,0.8);
 }
 
-#mode, #custom-kb, #custom-forward,#custom-backward, #custom-github, #custom-youtube,  #custom-reddit, #custom-power, #workspaces, #battery, #cpu, #disk, #memory, #network, #pulseaudio, #idle_inhibitor, #backlight,  #clock, #temperature {
+#mode, #custom-kb,#custom-keyboard, #custom-forward,#custom-backward, #custom-github, #custom-youtube,  #custom-reddit, #custom-power, #workspaces, #battery, #cpu, #disk, #memory, #network, #pulseaudio, #idle_inhibitor, #backlight,  #clock, #temperature {
   margin: 4px 4px;
   border-radius: 20px;
   min-width: 10px;

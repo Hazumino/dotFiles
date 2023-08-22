@@ -4,7 +4,7 @@
     "height": 10,
     "width": 1050,
     "margin": "9, 0, 2, 0",
-    "modules-center": ["custom/backward", "custom/forward"],
+    "modules-center": ["custom/backward", "custom/keyboard", "custom/forward"],
     "modules-left": [ "wlr/workspaces", "cpu", "memory", "disk"],
     "modules-right": ["custom/kb","backlight", "network", "battery", "clock", "custom/power"],
 
@@ -27,15 +27,15 @@
         "format": "󰌌   {}%",
         "interval": 1,
         "exec": "echo $((($(brightnessctl --device='kbd_backlight' get)*100) / 255))",
-        "format-icons": ["󰌌"],
         "on-scroll-down": "brightnessctl --device='kbd_backlight' set 1%-",
         "on-scroll-up": "brightnessctl --device='kbd_backlight' set 1%+"
     },
 
-    "custom/youtube": {
-        "format":" 󰗃 ",
-        "on-click": "exec firefox youtube.com",
-        "tooltip": false,
+    "custom/keyboard": {
+        "format":" {} ",
+        "interval": 1,
+        "exec": "~/dotFiles/change_kb.sh false",
+        "on-click": "~/dotFiles/change_kb.sh",
     },
 
     "custom/forward": {
