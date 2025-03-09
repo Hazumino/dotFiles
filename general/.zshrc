@@ -4,8 +4,6 @@
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-export OPENROUTER_API_KEY="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"
-export DEEPSEEK_API_KEY="sk-266c4b0238a5416fbd54d67626b804ed"
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time Oh My Zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
