@@ -1,7 +1,19 @@
 #!/bin/bash
 
+# Detect operating system and set the source directory accordingly
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  OS_DIR="linux"
+  echo "Linux detected, using linux configuration."
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  OS_DIR="mac"
+  echo "macOS detected, using mac configuration."
+else
+  echo "Unknown operating system. Defaulting to mac configuration."
+  OS_DIR="mac"
+fi
+
 # Define source and destination directories
-DOTFILES_DIR="$HOME/Documents/dotFiles/mac"
+DOTFILES_DIR="$HOME/Documents/dotfiles/$OS_DIR"
 CONFIG_DIR="$HOME/.config"
 
 # Create .config directory if it doesn't exist
