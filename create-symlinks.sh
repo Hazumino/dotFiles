@@ -19,40 +19,49 @@ CONFIG_DIR="$HOME/.config"
 # Create .config directory if it doesn't exist
 mkdir -p "$CONFIG_DIR"
 
+# Check if dotfiles directory exists
+if [ ! -d "$DOTFILES_DIR" ]; then
+  echo "Error: Dotfiles directory $DOTFILES_DIR does not exist."
+  exit 1
+fi
+
 # Create symlinks for config folders
 echo "Creating symlinks for config folders..."
-for folder in borders ghostty nvim sketchybar spicetify vifm; do
-  if [ -d "$DOTFILES_DIR/$folder" ]; then
+
+# Loop through all directories in the dotfiles directory
+for folder in $(find "$DOTFILES_DIR" -maxdepth 1 -type d -not -path "$DOTFILES_DIR"); do
+  folder_name=$(basename "$folder")
+
+  # Skip hidden directories (those starting with .)
+  if [[ "$folder_name" != .* ]]; then
     # Remove existing destination if it exists
-    if [ -e "$CONFIG_DIR/$folder" ]; then
-      echo "Removing existing $CONFIG_DIR/$folder"
-      rm -rf "$CONFIG_DIR/$folder"
+    if [ -e "$CONFIG_DIR/$folder_name" ]; then
+      echo "Removing existing $CONFIG_DIR/$folder_name"
+      rm -rf "$CONFIG_DIR/$folder_name"
     fi
 
     # Create symlink
-    echo "Creating symlink: $CONFIG_DIR/$folder -> $DOTFILES_DIR/$folder"
-    ln -sf "$DOTFILES_DIR/$folder" "$CONFIG_DIR/$folder"
-  else
-    echo "Warning: Source folder $DOTFILES_DIR/$folder does not exist"
+    echo "Creating symlink: $CONFIG_DIR/$folder_name -> $folder"
+    ln -sf "$folder" "$CONFIG_DIR/$folder_name"
   fi
 done
 
-# Create symlinks for home directory files
+# Create symlinks for home directory files (dotfiles)
 echo "Creating symlinks for home directory files..."
-for file in .zshrc .tmux.conf; do
-  if [ -f "$DOTFILES_DIR/$file" ]; then
-    # Remove existing destination if it exists
-    if [ -e "$HOME/$file" ]; then
-      echo "Removing existing $HOME/$file"
-      rm -f "$HOME/$file"
-    fi
 
-    # Create symlink
-    echo "Creating symlink: $HOME/$file -> $DOTFILES_DIR/$file"
-    ln -sf "$DOTFILES_DIR/$file" "$HOME/$file"
-  else
-    echo "Warning: Source file $DOTFILES_DIR/$file does not exist"
+# Loop through all hidden files in the dotfiles directory
+for file in $(find "$DOTFILES_DIR" -maxdepth 1 -type f -name ".*"); do
+  file_name=$(basename "$file")
+
+  # Remove existing destination if it exists
+  if [ -e "$HOME/$file_name" ]; then
+    echo "Removing existing $HOME/$file_name"
+    rm -f "$HOME/$file_name"
   fi
+
+  # Create symlink
+  echo "Creating symlink: $HOME/$file_name -> $file"
+  ln -sf "$file" "$HOME/$file_name"
 done
 
 echo "Symlinks created successfully!"
