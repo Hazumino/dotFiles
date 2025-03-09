@@ -1,0 +1,13 @@
+colorscheme iceberg
+
+" show file and directory preview in right pane view!
+" preview text files using "man"
+fileviewer {*.[1-8]},<text/troff> man ./%c | col -b
+
+fileviewer */ ls --color=always
+fileviewer .*/ ls --color=always
+
+set suggestoptions=normal,visual,view,otherpane,keys,marks,registers
+
+set vicmd=nvim
+

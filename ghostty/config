@@ -1,5 +1,0 @@
-background-opacity = 0.55
-background-blur-radius = 20
-theme=catppuccin-mocha
-macos-titlebar-style = hidden
-custom-shader-animation = true
